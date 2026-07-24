@@ -52,7 +52,7 @@ Run with:
 ```bash
 mysql -u <user> -p < schema.sql
 
-⚙️ Part B — Java Backend
+⚙️ 🗂️Part B — Java Backend
 Implements enrollStudent and cancelEnrollment with rules:
 
 Prevent duplicate enrollment.
