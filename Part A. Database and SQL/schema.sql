@@ -1,8 +1,8 @@
-SQL Schema for Course Enrollment System
+--SQL Schema for Course Enrollment System
 
-Tables
+--Tables
 
-1)Students
+--1)Students
 
 mysql> create table students(
     -> id int primary key auto_increment,
@@ -12,7 +12,7 @@ mysql> create table students(
     -> );
 Query OK, 0 rows affected (0.08 sec)
 
-2)Courses
+--2)Courses
 
 mysql> create table courses(
     -> id int primary key auto_increment,
@@ -22,7 +22,7 @@ mysql> create table courses(
     -> );
 Query OK, 0 rows affected (0.05 sec)
 
-3)Enrollments
+--3)Enrollments
 
 mysql> create table enrollments(
     -> student_id int,
@@ -34,6 +34,10 @@ mysql> create table enrollments(
     -> foreign key(course_id) references courses(id)
     -> );
 Query OK, 0 rows affected (0.07 sec)
+
+--Hardcoded Values
+
+--Student
 
 mysql> insert into students(name,email,year_of_study) values
     -> ('Kshitij','kk@gmail.com',4),
@@ -49,6 +53,8 @@ mysql> insert into students(name,email,year_of_study) values
 Query OK, 10 rows affected (0.02 sec)
 Records: 10  Duplicates: 0  Warnings: 0
 
+--Courses
+
 mysql> insert into courses(name,capacity,instructor_name) values
     -> ('Data Science with AIML',3,'Prof. Rahul Dev'),
     -> ('Java Full Stack',2,'Prof. Payal Rao'),
@@ -57,6 +63,7 @@ mysql> insert into courses(name,capacity,instructor_name) values
 Query OK, 4 rows affected (0.01 sec)
 Records: 4  Duplicates: 0  Warnings: 0
 
+--Enrollments
 
 mysql> insert into enrollments (student_id, course_id, enrollment_date, status) values
     -> (1, 1, '2026-07-01', 'enrolled'),
@@ -77,51 +84,35 @@ mysql> insert into enrollments (student_id, course_id, enrollment_date, status) 
 Query OK, 15 rows affected (0.01 sec)
 Records: 15  Duplicates: 0  Warnings: 0
 
+--Write SQL queries for:
+
+--List all courses that are at full capacity (i.e., number of enrolled students = course capacity).
 
 mysql> select c.name from courses c
     -> join enrollments e on c.id=e.course_id and e.status='enrolled'
     -> group by c.id,c.name,c.capacity
     -> having count(e.student_id)>=c.capacity;
-+------------------------------+
-| name                         |
-+------------------------------+
-| Data Science with AIML       |
-| Java Full Stack              |
-| Python with Machine Learning |
-| Semiconductor Engineering    |
-+------------------------------+
-4 rows in set (0.01 sec)
 
+--List students who are enrolled in more than 2 courses.
 
 mysql> select s.name,count(e.course_id) as course_count
     -> from students s
     -> join enrollments e on s.id=e.student_id and e.status='enrolled'
     -> group by s.id,s.name
     -> having count(e.course_id)>2;
-Empty set (0.00 sec)
 
-
+--For each course, show the number of students enrolled and the number of empty seats remaining.
 
 mysql> select c.name ,count(e.student_id) as enrolled_students,
     -> (c.capacity-count(e.student_id)) as empty_seats
     -> from courses c
     -> left join enrollments e on c.id=e.course_id and e.status='enrolled'
     -> group by c.id,c.name,c.capacity;
-+------------------------------+-------------------+-------------+
-| name                         | enrolled_students | empty_seats |
-+------------------------------+-------------------+-------------+
-| Data Science with AIML       |                 3 |           0 |
-| Java Full Stack              |                 2 |           0 |
-| Python with Machine Learning |                 3 |           0 |
-| Semiconductor Engineering    |                 4 |           0 |
-+------------------------------+-------------------+-------------+
-4 rows in set (0.01 sec)
 
-
+--Find students who have not enrolled in any course.
 
 mysql> select s.name
     -> from students s
     -> left join enrollments e
     -> on s.id=e.student_id
     -> where e.student_id is null;
-Empty set (0.00 sec)
