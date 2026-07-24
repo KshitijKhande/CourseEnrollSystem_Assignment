@@ -10,8 +10,8 @@ my-app/
 │   └── schema.sql              CREATE TABLEs, sample data, required queries
 ├── Part B.Core Logic/
 │   ├── bin/                    compiled .class output (safe to delete/rebuild)
-│   └── src/                    Java source — Student, Course, Enrollment,
-│                                EnrollmentService, Main
+│   └── src/                    Java source — Student, Course, EnrollmentManager,
+│                                EnrollmentSystem(Main)
 ├── Part C. Simple Frontend/
 │   ├── public/
 │   └── src/
@@ -22,7 +22,7 @@ my-app/
 ├── Part D.Debug This/
 │   └── debug.md                 broken snippet, fix, and explanation
 └── Part E. Short Writeup/
-    └── writeup.md                reflection on the assignment
+    └── NOTES.md                reflection on the assignment
 ```
 
 ## Part A — Database & SQL
@@ -97,7 +97,7 @@ snippet, the corrected version, and an explanation of what was wrong.
 
 ## Part E — Short Write-up
 
-See `Part E. Short Writeup/writeup.md` for the reflection on the trickiest
+See `Part E. Short Writeup/NOTES.md` for the reflection on the trickiest
 part of the assignment, what I'd improve with more time, and how AI tools
 were used.
 
